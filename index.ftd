@@ -6,10 +6,10 @@
 -- is-mobile:true
 if: $ftd.device == mobile
 
--- optional integer instance-id:
+-- optional string instance-id:
 $always-include$: true
 
--- optional integer package-name:
+-- optional string package-name:
 $always-include$: true
 
 -- record instance:
@@ -73,20 +73,19 @@ width: fill
 spacing: space-between
 border-radius: 6
 padding: 15
-string status: $instance.status
-background-color if $status == in progress: $fpm.main.success.base
-background-color if $status == In Progress: $fpm.main.success.base
-background-color if $status == done: $fpm.color.main.accent.tertiary
-background-color if $status == Done: $fpm.color.main.accent.tertiary
-background-color if $status == Open: $fpm.color.main.info.base
-background-color if $status == open: $fpm.color.main.info.base
+background-color if $instance.instance_status == in progress: $fpm.main.success.base
+background-color if $instance.instance_status == In Progress: $fpm.main.success.base
+background-color if $instance.instance_status == done: $fpm.color.main.accent.tertiary
+background-color if $instance.instance_status == Done: $fpm.color.main.accent.tertiary
+background-color if $instance.instance_status == Open: $fpm.color.main.info.base
+background-color if $instance.instance_status == open: $fpm.color.main.info.base
 shadow-color: $fpm.color.main.cta-tertiary.border
 shadow-offset-x: 1
 shadow-offset-y: 2
 shadow-size: 2
 shadow-blur: 3
 
---- ftd.text: $instance.package-name
+--- ftd.text: $instance.package_name
 style: bold
 role: $fpm.type.heading-small
 
@@ -96,7 +95,7 @@ spacing: 20
 
 
 
---- ftd.text: $instance.instance-id
+--- ftd.text: $instance.instance_id
 style: bold
 role: $fpm.type.heading-small
 
@@ -110,8 +109,8 @@ role: $fpm.type.heading-small
 --- button.button: Delete
 role: secondary
 small: true
-$on-click$: $instance-id = $instance.id
-$on-click$: $package-name=$instance.instance-status
+$on-click$: $instance-id = $instance.instance_id
+$on-click$: $package-name = $instance.package_name
 $on-click$: message-host $delete-status-api
 
 
@@ -127,20 +126,19 @@ width: fill
 spacing: space-between
 border-radius: 6
 padding: 15
-string status: $instance.status
-background-color if $status == in progress: $fpm.main.success.base
-background-color if $status == In Progress: $fpm.main.success.base
-background-color if $status == done: $fpm.color.main.accent.tertiary
-background-color if $status == Done: $fpm.color.main.accent.tertiary
-background-color if $status == Open: $fpm.color.main.info.base
-background-color if $status == open: $fpm.color.main.info.base
+background-color if $instance.instance_status == in progress: $fpm.main.success.base
+background-color if $instance.instance_status == In Progress: $fpm.main.success.base
+background-color if $instance.instance_status == done: $fpm.color.main.accent.tertiary
+background-color if $instance.instance_status == Done: $fpm.color.main.accent.tertiary
+background-color if $instance.instance_status == Open: $fpm.color.main.info.base
+background-color if $instance.instance_status == open: $fpm.color.main.info.base
 shadow-color: $fpm.color.main.cta-tertiary.border
 shadow-offset-x: 1
 shadow-offset-y: 2
 shadow-size: 2
 shadow-blur: 3
 
---- ftd.text: $instance.package-name
+--- ftd.text: $instance.package_name
 style: bold
 role: $fpm.type.heading-small
 
@@ -148,11 +146,11 @@ role: $fpm.type.heading-small
 --- ftd.column:
 spacing: 20
 
---- ftd.text: $instance.package-name
+--- ftd.text: $instance.package_name
 style: bold
 role: $fpm.type.heading-small
 
---- ftd.text: $instance.instance-id
+--- ftd.text: $instance.instance_id
 style: bold
 role: $fpm.type.heading-small
 
@@ -165,7 +163,8 @@ role: $fpm.type.heading-small
 --- button.button: Delete
 role: secondary
 small: true
-$on-click$: $instance-id = $instance.id
+$on-click$: $package-name = $instance.package_name
+$on-click$: $instance-id = $instance.instance_id
 $on-click$: message-host $delete-status-api
 
 
@@ -174,9 +173,9 @@ $on-click$: message-host $delete-status-api
 -- instance list instances:
 $processor$: http
 method: get
-url: http://127.0.0.1:8001/api/instance/
+url: http://127.0.0.1:8001/api/hosted-packages/
 
--- list-instance:
+-- instance-list:
 instances: $instances
 
 

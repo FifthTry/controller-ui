@@ -1,6 +1,5 @@
 -- import: fpm
 
-
 -- boolean is-mobile: false
 
 -- is-mobile:true
@@ -94,14 +93,10 @@ dark: black
 -- object add-instance-api:
 function: http
 method: post
-url: /api/add-instance-api/
+url: /api/create-instance/
 package_name: $package-name
 download_base_url: $download-base-url
-instance_id: $instance-id
-ip: $ip
-ip-error: $ip-error
 $package-name-error: $package-name-error
-$instance-id-error: $instance-id-error
 $download-base-url-error: $download-base-url-error
 
 
