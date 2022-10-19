@@ -23,10 +23,11 @@ string ip:
 instance list instances:
 width: fill
 padding-vertical: 20
-padding-horizontal if not $is-mobile: 150
+padding-horizontal if not $is-mobile: 24
 padding-horizontal if $is-mobile: 20
 spacing: 30
-align: center
+max-width: 890
+align:center
 
 --- ftd.row:
 width: fill
@@ -68,17 +69,17 @@ if: not $is-mobile
 width: fill
 id: full-screen-container
 
+
 --- ftd.row:
 width: fill
 spacing: space-between
 border-radius: 6
 padding: 15
-background-color if $instance.instance_status == in progress: $fpm.main.success.base
-background-color if $instance.instance_status == In Progress: $fpm.main.success.base
-background-color if $instance.instance_status == done: $fpm.color.main.accent.tertiary
-background-color if $instance.instance_status == Done: $fpm.color.main.accent.tertiary
-background-color if $instance.instance_status == Open: $fpm.color.main.info.base
-background-color if $instance.instance_status == open: $fpm.color.main.info.base
+background-color if $instance.instance_status == INITIALIZED: $fpm.color.main.info.base
+background-color if $instance.instance_status == PENDING: $light-red
+background-color if $instance.instance_status == READY: $fpm.color.main.success.base
+background-color if $instance.instance_status == STOPPED: $fpm.color.main.error.base
+background-color if $instance.instance_status == TERMINATED: $fpm.color.main.warning.base
 shadow-color: $fpm.color.main.cta-tertiary.border
 shadow-offset-x: 1
 shadow-offset-y: 2
@@ -91,24 +92,46 @@ role: $fpm.type.heading-small
 
 
 --- ftd.column:
-spacing: 20
+spacing: 12
+
+
+--- ftd.text: $instance.instance_status
+role: $fpm.type.label-small
+color: $fpm.color.main.background.base
+color if $instance.instance_status == READY: $fpm.color.main.success.text
+color if $instance.instance_status == PENDING: $dark-red
+color if $instance.instance_status == INITIALIZED: $fpm.color.main.cta-secondary.base
+color if $instance.instance_status == STOPPED: $fpm.color.main.error.text
+color if $instance.instance_status == TERMINATED: $fpm.color.main.warning.text
+padding-vertical: 4
+padding-horizontal: 8
+border-radius: 20
+border-color if $instance.instance_status == INITIALIZED: $fpm.color.main.cta-secondary.base
+border-color if $instance.instance_status == PENDING: $dark-red
+border-color if $instance.instance_status == READY: $fpm.color.main.success.text
+border-color if $instance.instance_status == STOPPED: $fpm.color.main.error.border
+border-color if $instance.instance_status == TERMINATED: $fpm.color.main.warning.text
+border-width: 1
 
 
 
 --- ftd.text: $instance.instance_id
-style: bold
-role: $fpm.type.heading-small
+if: $instance.instance_status == READY
+role: $fpm.type.label-small
 
 --- ftd.text: $instance.ip
-style: bold
-role: $fpm.type.heading-small
+if: $instance.instance_status == READY
+role: $fpm.type.label-small
 
 --- container: full-screen-container
 
+--- ftd.column:
+margin-left: 24
+align: center
 
 --- button.button: Delete
 role: secondary
-small: true
+large: true
 $on-click$: $instance-id = $instance.instance_id
 $on-click$: $package-name = $instance.package_name
 $on-click$: message-host $delete-status-api
@@ -120,43 +143,65 @@ $on-click$: message-host $delete-status-api
 if: $is-mobile
 id: mobile-screen
 spacing: 20
-
---- ftd.row:
 width: fill
-spacing: space-between
+
+--- ftd.column:
+width: fill
 border-radius: 6
 padding: 15
-background-color if $instance.instance_status == in progress: $fpm.main.success.base
-background-color if $instance.instance_status == In Progress: $fpm.main.success.base
-background-color if $instance.instance_status == done: $fpm.color.main.accent.tertiary
-background-color if $instance.instance_status == Done: $fpm.color.main.accent.tertiary
-background-color if $instance.instance_status == Open: $fpm.color.main.info.base
-background-color if $instance.instance_status == open: $fpm.color.main.info.base
+background-color if $instance.instance_status == INITIALIZED: $fpm.color.main.info.base
+background-color if $instance.instance_status == PENDING: $light-red
+background-color if $instance.instance_status == READY: $fpm.color.main.success.base
+background-color if $instance.instance_status == STOPPED: $fpm.color.main.error.base
+background-color if $instance.instance_status == TERMINATED: $fpm.color.main.warning.base
 shadow-color: $fpm.color.main.cta-tertiary.border
 shadow-offset-x: 1
 shadow-offset-y: 2
 shadow-size: 2
 shadow-blur: 3
+spacing: 12
 
---- ftd.text: $instance.package_name
-style: bold
-role: $fpm.type.heading-small
 
+--- ftd.text: $instance.instance_status
+role: $fpm.type.label-small
+color: $fpm.color.main.background.base
+color if $instance.instance_status == READY: $fpm.color.main.success.text
+color if $instance.instance_status == PENDING: $dark-red
+color if $instance.instance_status == INITIALIZED: $fpm.color.main.cta-secondary.base
+color if $instance.instance_status == STOPPED: $fpm.color.main.error.text
+color if $instance.instance_status == TERMINATED: $fpm.color.main.warning.text
+padding-vertical: 4
+padding-horizontal: 8
+border-radius: 20
+border-color if $instance.instance_status == INITIALIZED: $fpm.color.main.cta-secondary.base
+border-color if $instance.instance_status == PENDING: $dark-red
+border-color if $instance.instance_status == READY: $fpm.color.main.success.text
+border-color if $instance.instance_status == STOPPED: $fpm.color.main.error.border
+border-color if $instance.instance_status == TERMINATED: $fpm.color.main.warning.text
+border-width: 1
 
 --- ftd.column:
-spacing: 20
+margin-left: 4
+spacing: 12
 
 --- ftd.text: $instance.package_name
 style: bold
 role: $fpm.type.heading-small
 
+
+
+
+
+
+
 --- ftd.text: $instance.instance_id
-style: bold
-role: $fpm.type.heading-small
+if: $instance.instance_status == READY
+role: $fpm.type.label-small
 
 --- ftd.text: $instance.ip
-style: bold
-role: $fpm.type.heading-small
+if: $instance.instance_status == READY
+role: $fpm.type.label-small
+
 
 --- container: mobile-screen
 
@@ -189,3 +234,10 @@ package_name: $package-name
 
 
 
+-- ftd.color light-red:
+light: #ffc297
+dark: #ffc297
+
+-- ftd.color dark-red:
+light: #bb5c2d
+dark: #bb5c2d
