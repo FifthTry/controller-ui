@@ -1,0 +1,115 @@
+-- import: fpm
+
+-- optional string package-name:
+$always-include$: true
+
+-- optional string package-name-error:
+$always-include$: true
+
+-- optional string instance-id: 
+$always-include$: true
+
+-- optional string instance-id-error:
+$always-include$: true
+
+-- optional string download-base-url:
+$always-include$: true
+
+-- optional string download-base-url-error:
+$always-include$: true
+
+-- optional string ip:
+$always-include$: true
+
+-- optional string ip-error:
+$always-include$: true
+
+
+
+
+
+
+
+-- instance-form:
+
+
+-- ftd.column instance-form:
+width: fill
+padding-vertical: 20
+padding-horizontal if not $is-mobile: 150
+padding-horizontal if $is-mobile: 20
+align: center
+
+-- ftd.text: ADD NEW INSTANCE
+role: $fpm.type.heading-large
+text-align: center
+style: bold
+align: center
+
+
+-- form.input-box: Package Name
+$value: $package-name
+$error: $package-name-error
+placeholder: Package Name
+align: center
+
+-- form.input-box: Download Base Url
+$value: $download-base-url
+$error: $download-base-url-error
+placeholder: Download Base Url
+align: center
+
+
+-- form.input-box: Instance Id
+$value: $instance-id
+$error: $instance-id-error
+placeholder: Instance Id
+align: center
+
+-- form.input-box: IP
+$value: $ip
+$error: $ip-error
+placeholder: Package Name
+align: center
+
+--- ftd.column:
+margin-left if not $is-mobile: 150
+margin-left if $is-mobile: 120
+margin-top: $fpm.space.space-4
+
+--- button.button: Add INSTANCE
+role: primary
+large: true
+$on-click$: message-host $add-instance-api
+
+
+
+
+
+
+
+
+
+-- ftd.color transparent-color:
+light: rgba(255,255,255,0)
+dark: rgba(255,255,255,0)
+
+-- ftd.color black:
+light: black
+dark: black
+
+
+-- object add-instance-api:
+function: http
+method: post
+url: /api/add-instance-api/
+package_name: $package-name
+download_base_url: $download-base-url
+instance_id: $instance-id
+ip: $ip
+ip-error: $ip-error
+$package-name-error: $package-name-error
+$instance-id-error: $instance-id-error
+$download-base-url-error: $download-base-url-error
+
+
