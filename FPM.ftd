@@ -4,5 +4,17 @@
 download-base-url: https://raw.githubusercontent.com/fifthtry/controller-ui/main
 
 -- fpm.dependency: fifthtry.github.io/doc-site as ds
+-- fpm.dependency: fifthtry.github.io/button as button
+-- fpm.dependency: fifthtry.github.io/form as form
 
 -- fpm.auto-import: ds
+-- fpm.auto-import: button
+-- fpm.auto-import: form
+
+
+-- fpm.sitemap:
+
+# App: /
+
+- Create Instance: /create-instance/
+- List Instance: /

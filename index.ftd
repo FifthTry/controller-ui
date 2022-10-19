@@ -1,57 +1,192 @@
--- import: fifthtry.github.io/controller-ui/assets
+-- import: fpm
+
+
+-- boolean is-mobile: false
+
+-- is-mobile:true
+if: $ftd.device == mobile
+
+-- optional integer instance-id:
+$always-include$: true
+
+-- optional integer package-name:
+$always-include$: true
+
+-- record instance:
+string instance_id:
+string package_name:
+string instance_status:
+string ip:
+
+
+-- ftd.column instance-list:
+instance list instances:
+width: fill
+padding-vertical: 20
+padding-horizontal if not $is-mobile: 150
+padding-horizontal if $is-mobile: 20
+spacing: 30
+align: center
+
+--- ftd.row:
+width: fill
+spacing: space-between
+
+
+--- ftd.text: All Instance
+role: $fpm.type.heading-large
+style: bold
+
+
+--- container: ftd.main
+
+--- display-instance:
+$loop$: $instances as $instance
+instance: $instance
 
 
 
--- ds.page: Welcome to your [FPM site](https://fpm.dev/)
-
-FPM Blank Package Template Repo
-
-🧑‍🚀 **Seasoned traveler?** update this file. Enjoy!
 
 
---- ds.image: doc-site
-src: $assets.files.doc-site-example.png
+
+
+
+
+
+
+
+
+-- ftd.column display-instance:
+instance instance:
+spacing: 30
 width: fill
 
 
---- ds.h1: 🚀 Project Structure
 
-Inside of your FPM project, you'll see the following folders and files:
+--- ftd.row:
+if: not $is-mobile
+width: fill
+id: full-screen-container
 
+--- ftd.row:
+width: fill
+spacing: space-between
+border-radius: 6
+padding: 15
+string status: $instance.status
+background-color if $status == in progress: $fpm.main.success.base
+background-color if $status == In Progress: $fpm.main.success.base
+background-color if $status == done: $fpm.color.main.accent.tertiary
+background-color if $status == Done: $fpm.color.main.accent.tertiary
+background-color if $status == Open: $fpm.color.main.info.base
+background-color if $status == open: $fpm.color.main.info.base
+shadow-color: $fpm.color.main.cta-tertiary.border
+shadow-offset-x: 1
+shadow-offset-y: 2
+shadow-size: 2
+shadow-blur: 3
 
---- ds.code:
-lang:
-
-/
-├── .build/
-│   └── index.html
-├── .packages/
-│   └── fifthtry.github.io/
-│   	└── All downloaded dependencies
-│   	
-├── FPM.ftd
-├── index.ftd
-└── README.md
-
-
-
---- ds.h1: 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
---- ds.code:
-lang:
-
-=======================================================================
-| Command                | Action                                     |
-| :--------------------- | :----------------------------------------- |
-| fpm build              | FPM builder installs all `FPM` dependencies|
-| fpm serve              | Starts local dev server at available port  |
-|                        | `localhost:8000`                           |
-=======================================================================
+--- ftd.text: $instance.package-name
+style: bold
+role: $fpm.type.heading-small
 
 
---- ds.h1: 👀 Want to learn more?
+--- ftd.column:
+spacing: 20
 
-Feel free to check [our documentation](https://fpm.dev/) or jump into our [FifthTry Discord server](https://discord.gg/bucrdvptYd).
+
+
+--- ftd.text: $instance.instance-id
+style: bold
+role: $fpm.type.heading-small
+
+--- ftd.text: $instance.ip
+style: bold
+role: $fpm.type.heading-small
+
+--- container: full-screen-container
+
+
+--- button.button: Delete
+role: secondary
+small: true
+$on-click$: $instance-id = $instance.id
+$on-click$: $package-name=$instance.instance-status
+$on-click$: message-host $delete-status-api
+
+
+--- container: ftd.main
+
+--- ftd.column:
+if: $is-mobile
+id: mobile-screen
+spacing: 20
+
+--- ftd.row:
+width: fill
+spacing: space-between
+border-radius: 6
+padding: 15
+string status: $instance.status
+background-color if $status == in progress: $fpm.main.success.base
+background-color if $status == In Progress: $fpm.main.success.base
+background-color if $status == done: $fpm.color.main.accent.tertiary
+background-color if $status == Done: $fpm.color.main.accent.tertiary
+background-color if $status == Open: $fpm.color.main.info.base
+background-color if $status == open: $fpm.color.main.info.base
+shadow-color: $fpm.color.main.cta-tertiary.border
+shadow-offset-x: 1
+shadow-offset-y: 2
+shadow-size: 2
+shadow-blur: 3
+
+--- ftd.text: $instance.package-name
+style: bold
+role: $fpm.type.heading-small
+
+
+--- ftd.column:
+spacing: 20
+
+--- ftd.text: $instance.package-name
+style: bold
+role: $fpm.type.heading-small
+
+--- ftd.text: $instance.instance-id
+style: bold
+role: $fpm.type.heading-small
+
+--- ftd.text: $instance.ip
+style: bold
+role: $fpm.type.heading-small
+
+--- container: mobile-screen
+
+--- button.button: Delete
+role: secondary
+small: true
+$on-click$: $instance-id = $instance.id
+$on-click$: message-host $delete-status-api
+
+
+
+
+-- instance list instances:
+$processor$: http
+method: get
+url: http://127.0.0.1:8001/api/instance/
+
+-- list-instance:
+instances: $instances
+
+
+-- object delete-status-api:
+function: http
+method: delete
+url: /api/delete-instance/
+instance_id: $instance-id 
+package_name: $package-name
+
+
+
 
