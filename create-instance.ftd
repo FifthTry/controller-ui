@@ -1,5 +1,10 @@
 -- import: fpm
 
+
+-- boolean is-mobile: false
+
+-- is-mobile:true
+
 -- optional string package-name:
 $always-include$: true
 
@@ -57,19 +62,6 @@ align: center
 $value: $download-base-url
 $error: $download-base-url-error
 placeholder: Download Base Url
-align: center
-
-
--- form.input-box: Instance Id
-$value: $instance-id
-$error: $instance-id-error
-placeholder: Instance Id
-align: center
-
--- form.input-box: IP
-$value: $ip
-$error: $ip-error
-placeholder: Package Name
 align: center
 
 --- ftd.column:
