@@ -19,4 +19,4 @@ endpoint: http://127.0.0.1:8001
 
 - Create Instance: /create-instance/
 - Delete Instance: /delete-instance/
-- List Instance: /list-packages/
+- List Instances: /list-packages/
