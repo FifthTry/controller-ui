@@ -274,7 +274,7 @@ $on-click$: message-host $delete-machine-api
 -- instance list instances:
 $processor$: http
 method: get
-url: /api/list-packages/
+url: http://127.0.0.1:8001/api/list-packages/
 
 -- instance-list:
 instances: $instances
@@ -283,7 +283,7 @@ instances: $instances
 -- object delete-machine-api:
 function: http
 method: delete
-url: /api/delete-instance/
+url: http://127.0.0.1:8001/api/delete-instance/
 machine_id: $machine-id
 instance_id: $instance-id 
 package_name: $package-name
