@@ -3,8 +3,11 @@
 
 -- boolean is-mobile: false
 
--- is-mobile:true
+-- is-mobile: true
 if: $ftd.device == mobile
+
+-- optional string machine-id:
+$always-include$: true
 
 -- optional string instance-id:
 $always-include$: true
@@ -13,10 +16,12 @@ $always-include$: true
 $always-include$: true
 
 -- record instance:
+string machine_id:
 string instance_id:
 string package_name:
 string instance_status:
 string ip:
+string hosted_url:
 
 
 -- ftd.column instance-list:
@@ -38,6 +43,13 @@ spacing: space-between
 role: $fpm.type.heading-large
 style: bold
 
+--- ftd.column:
+
+--- button.button: Create Instance
+role: secondary
+large: true
+link: /create-instance/
+
 
 --- container: ftd.main
 
@@ -54,6 +66,16 @@ instance: $instance
 
 
 
+-- ftd.row labeled-data:
+caption label:
+string data:
+
+--- ftd.text: $label
+role: $fpm.type.label-small
+
+--- ftd.text: $data
+role: $fpm.type.label-small
+padding-left: 5
 
 
 
@@ -115,13 +137,29 @@ border-width: 1
 
 
 
---- ftd.text: $instance.instance_id
+/--- ftd.text: $instance.instance_id
 if: $instance.instance_status == READY
 role: $fpm.type.label-small
 
---- ftd.text: $instance.ip
+/--- ftd.text: $instance.ip
 if: $instance.instance_status == READY
 role: $fpm.type.label-small
+
+--- labeled-data: Machine ID:
+if: $instance.instance_status == READY
+data: $instance.machine_id
+
+--- labeled-data: Instance ID:
+if: $instance.instance_status == READY
+data: $instance.instance_id
+
+--- labeled-data: Public IP:
+if: $instance.instance_status == READY
+data: $instance.ip
+
+--- labeled-data: Hosted Url:
+if: $instance.instance_status == READY
+data: $instance.hosted_url
 
 --- container: full-screen-container
 
@@ -134,7 +172,8 @@ role: secondary
 large: true
 $on-click$: $instance-id = $instance.instance_id
 $on-click$: $package-name = $instance.package_name
-$on-click$: message-host $delete-status-api
+$on-click$: $machine-id = $instance.machine_id
+$on-click$: message-host $delete-machine-api
 
 
 --- container: ftd.main
@@ -194,13 +233,29 @@ role: $fpm.type.heading-small
 
 
 
---- ftd.text: $instance.instance_id
+/--- ftd.text: $instance.instance_id
 if: $instance.instance_status == READY
 role: $fpm.type.label-small
 
---- ftd.text: $instance.ip
+/--- ftd.text: $instance.ip
 if: $instance.instance_status == READY
 role: $fpm.type.label-small
+
+--- labeled-data: Machine ID:
+if: $instance.instance_status == READY
+data: $instance.machine_id
+
+--- labeled-data: Instance ID:
+if: $instance.instance_status == READY
+data: $instance.instance_id
+
+--- labeled-data: Private IP:
+if: $instance.instance_status == READY
+data: $instance.ip
+
+--- labeled-data: Hosted Url:
+if: $instance.instance_status == READY
+data: $instance.hosted_url
 
 
 --- container: mobile-screen
@@ -210,7 +265,8 @@ role: secondary
 small: true
 $on-click$: $package-name = $instance.package_name
 $on-click$: $instance-id = $instance.instance_id
-$on-click$: message-host $delete-status-api
+$on-click$: $machine-id = $instance.machine_id
+$on-click$: message-host $delete-machine-api
 
 
 
@@ -218,16 +274,17 @@ $on-click$: message-host $delete-status-api
 -- instance list instances:
 $processor$: http
 method: get
-url: http://127.0.0.1:8001/api/hosted-packages/
+url: /api/list-packages/
 
 -- instance-list:
 instances: $instances
 
 
--- object delete-status-api:
+-- object delete-machine-api:
 function: http
 method: delete
 url: /api/delete-instance/
+machine_id: $machine-id
 instance_id: $instance-id 
 package_name: $package-name
 
