@@ -2,7 +2,8 @@
 
 -- boolean is-mobile: false
 
--- is-mobile:true
+-- is-mobile: true
+if: $ftd.device == mobile
 
 -- optional string package-name:
 $always-include$: true
@@ -44,7 +45,7 @@ padding-horizontal if not $is-mobile: 150
 padding-horizontal if $is-mobile: 20
 align: center
 
--- ftd.text: ADD NEW INSTANCE
+-- ftd.text: Add new instance
 role: $fpm.type.heading-large
 text-align: center
 style: bold
