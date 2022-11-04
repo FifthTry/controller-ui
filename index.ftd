@@ -44,12 +44,17 @@ role: $fpm.type.heading-large
 style: bold
 
 --- ftd.column:
+spacing: 10
 
 --- button.button: Create Instance
 role: secondary
 large: true
 link: /create-instance/
 
+--- button.button: Deploy Controller
+role: secondary
+large: true
+$on-click$: message-host $deploy-controller-api
 
 --- container: ftd.main
 
@@ -288,7 +293,10 @@ machine_id: $machine-id
 instance_id: $instance-id 
 package_name: $package-name
 
-
+-- object deploy-controller-api:
+function: http
+method: post
+url: /api/deploy-controller/
 
 
 -- ftd.color light-red:

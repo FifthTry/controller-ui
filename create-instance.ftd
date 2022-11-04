@@ -51,6 +51,11 @@ text-align: center
 style: bold
 align: center
 
+-- ftd.text: For debugging - `https://raw.githubusercontent.com/AbrarNitk/abrark/main/`
+role: $fpm.type.heading-small
+text-align: center
+style: bold
+align: center
 
 -- form.input-box: Package Name
 $value: $package-name
