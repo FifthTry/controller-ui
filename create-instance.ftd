@@ -29,10 +29,13 @@ $always-include$: true
 -- optional string ip-error:
 $always-include$: true
 
+-- ftd.color transparent-color:
+light: rgba(255,255,255,0)
+dark: rgba(255,255,255,0)
 
-
-
-
+-- ftd.color black:
+light: black
+dark: black
 
 
 -- instance-form:
@@ -51,6 +54,17 @@ text-align: center
 style: bold
 align: center
 
+-- ftd.text: Debug 1 - `https://raw.githubusercontent.com/AbrarNitk/abrark/main/`
+role: $fpm.type.heading-small
+text-align: center
+style: medium
+align: center
+
+-- ftd.text: Debug 2 - `https://raw.githubusercontent.com/fifthtry/kameri-app/main`
+role: $fpm.type.heading-small
+text-align: center
+style: medium
+align: center
 
 -- form.input-box: Package Name
 $value: $package-name
@@ -68,36 +82,32 @@ align: center
 margin-left if not $is-mobile: 150
 margin-left if $is-mobile: 120
 margin-top: $fpm.space.space-4
+spacing: 10
 
---- button.button: Add INSTANCE
+--- button.button: Fast Deploy
 role: primary
 large: true
 $on-click$: message-host $add-instance-api
 
-
-
-
-
-
-
-
-
--- ftd.color transparent-color:
-light: rgba(255,255,255,0)
-dark: rgba(255,255,255,0)
-
--- ftd.color black:
-light: black
-dark: black
+--- button.button: Pay and Deploy
+role: primary
+large: true
+$on-click$: message-host $redirect-plans-page-api
 
 
 -- object add-instance-api:
 function: http
 method: post
-url: /api/create-instance/
+url: /-/fifthtry.github.io/controller-ui/api/create-instance/
 package_name: $package-name
 download_base_url: $download-base-url
 $package-name-error: $package-name-error
 $download-base-url-error: $download-base-url-error
 
-
+-- object redirect-plans-page-api:
+function: http
+method: post
+url: /-/fifthtry.github.io/controller-ui/api/redirect-to-plans/
+package_name: $package-name
+download_base_url: $download-base-url
+plan: Standard
