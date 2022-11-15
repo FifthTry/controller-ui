@@ -39,7 +39,7 @@ width: fill
 spacing: space-between
 
 
---- ftd.text: All Instance
+--- ftd.text: All Instances
 role: $fpm.type.heading-large
 style: bold
 
@@ -55,6 +55,11 @@ link: /create-instance/
 role: secondary
 large: true
 $on-click$: message-host $deploy-controller-api
+
+--- button.button: Add new plan
+role: secondary
+large: true
+link: /add-plan/
 
 --- container: ftd.main
 
@@ -173,6 +178,7 @@ margin-left: 24
 align: center
 
 --- button.button: Delete
+if: $instance.instance_status == READY
 role: secondary
 large: true
 $on-click$: $instance-id = $instance.instance_id
@@ -266,6 +272,7 @@ data: $instance.hosted_url
 --- container: mobile-screen
 
 --- button.button: Delete
+if: $instance.instance_status == READY
 role: secondary
 small: true
 $on-click$: $package-name = $instance.package_name
@@ -279,7 +286,7 @@ $on-click$: message-host $delete-machine-api
 -- instance list instances:
 $processor$: http
 method: get
-url: http://127.0.0.1:8001/api/list-packages/
+url: /-/fifthtry.github.io/controller-ui/api/list-packages/
 
 -- instance-list:
 instances: $instances
@@ -287,8 +294,8 @@ instances: $instances
 
 -- object delete-machine-api:
 function: http
-method: delete
-url: /api/delete-instance/
+method: post
+url: /-/fifthtry.github.io/controller-ui/api/delete-instance/
 machine_id: $machine-id
 instance_id: $instance-id 
 package_name: $package-name
@@ -296,7 +303,7 @@ package_name: $package-name
 -- object deploy-controller-api:
 function: http
 method: post
-url: /api/deploy-controller/
+url: /-/fifthtry.github.io/controller-ui/api/deploy-controller/
 
 
 -- ftd.color light-red:

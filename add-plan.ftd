@@ -1,0 +1,124 @@
+-- import: fpm
+
+-- boolean is-mobile: false
+
+-- is-mobile: true
+if: $ftd.device == mobile
+
+-- optional string plan-name:
+$always-include$: true
+
+-- optional string plan-name-error:
+$always-include$: true
+
+-- optional string description:
+$always-include$: true
+
+-- optional string description-error:
+$always-include$: true
+
+-- optional string charge-per-minute:
+$always-include$: true
+
+-- optional string charge-per-minute-error:
+$always-include$: true
+
+-- optional string instance-name:
+$always-include$: true
+
+-- optional string instance-name-error:
+$always-include$: true
+
+-- optional string vcpus:
+$always-include$: true
+
+-- optional string vcpus-error:
+$always-include$: true
+
+-- optional string ram:
+$always-include$: true
+
+-- optional string ram-error:
+$always-include$: true
+
+-- ftd.color transparent-color:
+light: rgba(255,255,255,0)
+dark: rgba(255,255,255,0)
+
+-- ftd.color black:
+light: black
+dark: black
+
+-- instance-form:
+
+
+-- ftd.column instance-form:
+width: fill
+padding-vertical: 20
+padding-horizontal if not $is-mobile: 150
+padding-horizontal if $is-mobile: 20
+align: center
+
+-- ftd.text: Add new plan
+role: $fpm.type.heading-large
+text-align: center
+style: bold
+align: center
+
+-- form.input-box: Plan Name
+$value: $plan-name
+$error: $plan-name-error
+placeholder: Plan Name
+align: left
+
+-- form.input-box: Description
+$value: $description
+$error: $description-error
+placeholder: Plan Description
+align: left
+
+-- form.input-box: Charge per minute
+$value: $charge-per-minute
+$error: $charge-per-minute-error
+placeholder: Charge per min
+align: left
+
+-- form.input-box: Instance Type
+$value: $instance-name
+$error: $instance-name-error
+placeholder: Instance Type
+align: left
+
+-- form.input-box: vCpus
+$value: $vcpus
+$error: $vcpus-error
+placeholder: vCPU's
+align: left
+
+-- form.input-box: RAM
+$value: $ram
+$error: $ram-error
+placeholder: Ram (in mbs)
+align: left
+
+--- ftd.column:
+margin-left if not $is-mobile: 150
+margin-left if $is-mobile: 120
+margin-top: $fpm.space.space-4
+
+--- button.button: Add Plan
+role: primary
+large: true
+$on-click$: message-host $add-plan-api
+
+
+-- object add-plan-api:
+function: http
+method: post
+url: /-/fifthtry.github.io/controller-ui/api/add-plan/
+instance_name: $instance-name
+vcpus: $vcpus
+ram: $ram
+plan_name: $plan-name
+description: $description
+charge_per_min: $charge-per-minute

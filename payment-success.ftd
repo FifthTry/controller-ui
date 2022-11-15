@@ -1,0 +1,67 @@
+-- import: fpm
+
+-- boolean is-mobile: false
+
+-- is-mobile: true
+if: $ftd.device == mobile
+
+-- record query-data:
+string plan:
+string package-name:
+string hosted-url:
+
+-- query-data query:
+$processor$: request-data
+
+-- ftd.column success-page:
+width: fill
+padding-vertical: 20
+padding-horizontal if not $is-mobile: 150
+padding-horizontal if $is-mobile: 20
+align: center
+
+--- ftd.text: Thanks for the purchase, your transaction was successful
+role: $fpm.type.heading-large
+text-align: center
+style: bold
+align: center
+
+--- label-bar-dstr: Package Deployed
+data: $query.package-name
+
+--- label-bar-dstr: Hosted Url
+data: $query.hosted-url
+
+--- label-bar-dstr: Plan
+data: $query.plan
+
+--- ftd.column:
+margin-left if not $is-mobile: 150
+margin-left if $is-mobile: 120
+margin-top: $fpm.space.space-4
+padding-vertical: 10
+align: center
+
+--- button.button: Return to Dashboard
+role: primary
+large: true
+link: /
+
+-- ftd.row label-bar-dstr:
+caption label:
+string data:
+align: center
+
+--- ftd.text: $label
+align: left
+role: $fpm.type.copy-large
+style: extra-bold
+
+--- ftd.text: $data
+align: right
+role: $fpm.type.copy-large
+style: medium
+move-right: 20
+
+-- success-page:
+
